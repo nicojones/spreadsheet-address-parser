@@ -1,6 +1,6 @@
 const REGION = 'es'; // Change the country region where the searches are performed.
 const LANGUAGE = 'es'; // Change the language of the addresses
-const API_KEY = 'AIzaSyBXf0n6t0qrd4DpNECTZaw6kp6bcrv8o5M'; // Set your StaticMaps API Key if you want a link to a static preview.
+const API_KEY = 'abcdefghijklmnopqrstuvwxyz'; // Set your StaticMaps API Key if you want a link to a static preview.
 
 const RETURN_COORDINATES = true; // or false;
 const RETURN_GOOGLEMAPS_URL = true; // or false;
