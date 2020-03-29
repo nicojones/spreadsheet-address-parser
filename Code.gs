@@ -88,6 +88,6 @@ function parseAddress(address, postcode) {
   }
   ////////////////////////////////
   
-  return [[coordinates, fullAddress, mapUrl, fullGoogleMapsUrl, resultMessage]];
+  return [resultArray];
 }
 
