@@ -4,9 +4,9 @@ const API_KEY = 'abcdefghijklmnopqrstuvwxyz'; // Set your StaticMaps API Key if 
 
 const RETURN_COORDINATES = true; // or false;
 const RETURN_GOOGLEMAPS_URL = true; // or false;
-const RETURN_STATICMAPS_IMAGE = true; // or false;
+const RETURN_STATICMAPS_IMAGE = false; // or false;
 const RETURN_FULLADDRESS = true; // or false;
-
+const RETURN_POSTCODE = true; // or false
 
 
 /**
@@ -45,12 +45,19 @@ function parseAddress(address, postcode) {
     return 'invalid address';
   }
   
-  // Check the postcode matches...
-  if (postcode && map.results[0].address_components && map.results[0].address_components.length) {
+  var google_postcode = 0;
+  
+  if (map.results[0].address_components && map.results[0].address_components.length) {
     var comp = map.results[0].address_components;
     var length = comp.length;
+    // return [JSON.stringify(comp)];
     for (var i = 0; i < length; ++i) {
-      if (comp[i] && comp[i].types && comp[i].types.length && comp[i].types[0] === "postal_code") {
+      if (comp[i].types[0] === "postal_code") {
+        google_postcode = comp[i].long_name;
+      }
+      
+      // Check if the postcode matches the given one (if any was given)...
+      if (postcode && comp[i] && comp[i].types && comp[i].types.length && comp[i].types[0] === "postal_code") {
         if (comp[i].long_name !== (postcode + '')) {
           resultMessage = '!! zip mismatch: ' + comp[i].long_name + ' vs ' + postcode
         }
@@ -67,6 +74,11 @@ function parseAddress(address, postcode) {
   if (RETURN_COORDINATES) {
     var coordinates = map.results[0].geometry.location.lat + ',' + map.results[0].geometry.location.lng;
     resultArray.push(coordinates);
+  }
+  ///////////////////////////////
+    
+  if (RETURN_POSTCODE) {
+    resultArray.push(google_postcode);
   }
   ///////////////////////////////
   
@@ -90,4 +102,3 @@ function parseAddress(address, postcode) {
   
   return [resultArray];
 }
-
